@@ -1,13 +1,35 @@
 import logo from "./assets/logo.png";
 import { NoteCard } from "./components/note-card";
 import { AddCard } from "./components/add-card";
+import { useState } from "react";
 
-const note = {
-  date: new Date(),
-  content: 'Hello'
+interface Note {
+  id: string,
+  date: Date,
+  content: string
 }
 
 export function App() {
+ const [notes, setNotes] = useState<Note[]>(() => {
+  const notesOnStorage = localStorage.getItem('notes')
+  return notesOnStorage ? JSON.parse(notesOnStorage) : []
+ })
+
+ function onNoteCreated(content:string){
+  
+  const newNote = {
+    id: crypto.randomUUID(),
+    date: new Date(),
+    content,
+  }
+  setNotes([newNote, ...notes])
+
+  const notesArray = [newNote, ...notes]
+
+  localStorage.setItem('notes', JSON.stringify(notesArray))
+
+ }
+
   return (
     //mx - margin do eixo x - horizontal
     //o tailwind utiliza o espaçamento multiplo de 4, então o valor 1 tem o px de 4, 2 tem px de 8 e vice versa
@@ -28,8 +50,11 @@ export function App() {
       {/* para colocarmos um valor definido por mim e não pelo tailwind, posso colocar o valor dentro de colchetes [30px] */}
       <div className="grid grid-cols-3 gap-6 auto-rows-[250px]">
         {/* rounded-md é equivalente a border radius */}
-        <AddCard />
-        <NoteCard note={note}/>
+        <AddCard onNoteCreated={onNoteCreated}/>
+        {/* <NoteCard note={note}/> */}
+        {notes.map(note => {
+          return <NoteCard key={note.id} note={note}/>
+        })}
       </div>
     </div>
   );
