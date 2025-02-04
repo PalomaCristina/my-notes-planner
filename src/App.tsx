@@ -1,6 +1,11 @@
 import logo from "./assets/logo.png";
 import { NoteCard } from "./components/note-card";
 import { AddCard } from "./components/add-card";
+const note = {
+  date: new Date(),
+  content: 'Hello'
+}
+
 export function App() {
   return (
     //mx - margin do eixo x - horizontal
@@ -23,10 +28,7 @@ export function App() {
       <div className="grid grid-cols-3 gap-6 auto-rows-[250px]">
         {/* rounded-md é equivalente a border radius */}
         <AddCard />
-        <NoteCard />
-        <NoteCard />
-        <NoteCard />
-        <NoteCard />
+        <NoteCard note={note}/>
       </div>
     </div>
   );
