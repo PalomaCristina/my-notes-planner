@@ -1,6 +1,7 @@
 import logo from "./assets/logo.png";
 import { NoteCard } from "./components/note-card";
 import { AddCard } from "./components/add-card";
+
 const note = {
   date: new Date(),
   content: 'Hello'
