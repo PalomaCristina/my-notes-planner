@@ -14,7 +14,7 @@ export function NoteCard({note}: NoteCardProps) {
 
     <Dialog.Root>
     {/* // ring-2 cria uma sombra, o que facilita pois se utilizarmos a borda, ela adiciona ao espaço e a ring não  */}
-    <Dialog.Trigger className="rounded-md text-left bg-slate-800 p-5 space-y-3 outline-none overflow-hidden relative hover:ring-2 hover:ring-slate-600 focus-visible:ring-2 focus-visible:ring-lime-400">
+    <Dialog.Trigger className="rounded-md text-left flex flex-col bg-slate-800 p-5 space-y-3 outline-none overflow-hidden relative hover:ring-2 hover:ring-slate-600 focus-visible:ring-2 focus-visible:ring-lime-400">
       <span className="text-sm font-medium text-slate-200">
         {formatDistanceToNow(note.date, {locale: ptBR, addSuffix: true})}
         </span>
