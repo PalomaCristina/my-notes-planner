@@ -31,15 +31,23 @@ export function App() {
   const notesArray = [newNote, ...notes]
 
   localStorage.setItem('notes', JSON.stringify(notesArray))
+  
+}
 
- }
-
- function onHandleSearch(event: ChangeEvent<HTMLInputElement>){
+function onHandleSearch(event: ChangeEvent<HTMLInputElement>){
   const query = event.target.value;
-
+  
   setSearch(query)
- }
+}
 
+function onNoteDeleted(id: string){
+  const notesArrayUpdateWithNoteDeleted = notes.filter(note => {
+    return note.id !== id
+  })
+  
+  setNotes(notesArrayUpdateWithNoteDeleted);
+  localStorage.setItem('notes', JSON.stringify(notesArrayUpdateWithNoteDeleted))
+ }
  const filteredNotes = search !== '' ? notes.filter(note => note.content.toLocaleLowerCase().includes(search.toLocaleLowerCase())) : notes
 
   return (
@@ -64,10 +72,11 @@ export function App() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[250px]">
         {/* rounded-md é equivalente a border radius */}
         <AddCard onNoteCreated={onNoteCreated}/>
-        {/* <NoteCard note={note}/> */}
+        
         {filteredNotes.map(note => {
-          return <NoteCard key={note.id} note={note}/>
+          return <NoteCard  onNoteDeleted={onNoteDeleted} key={note.id} note={note}/>
         })}
+        
       </div>
     </div>
   );

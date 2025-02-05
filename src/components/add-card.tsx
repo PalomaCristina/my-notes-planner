@@ -2,11 +2,11 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "sonner";
-
+// import { revalidatePath } from 'next'
 interface AddCardProps {
   onNoteCreated: (content: string) => void;
 }
-let speechRecognition : SpeechRecognition | null = null;
+let speechRecognition: SpeechRecognition | null = null;
 
 export function AddCard({ onNoteCreated }: AddCardProps) {
   const [shouldShowDescription, setShoulShowDescription] = useState(true);
@@ -14,6 +14,8 @@ export function AddCard({ onNoteCreated }: AddCardProps) {
   const [content, setContent] = useState("");
 
   const [isRecording, setIsRecording] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   function handleStartEditor() {
     setShoulShowDescription(false);
@@ -29,66 +31,69 @@ export function AddCard({ onNoteCreated }: AddCardProps) {
   function handleSaveNote(event: FormEvent) {
     event.preventDefault();
 
-    if(content === '') {
-      return toast.error("Não é possível criar uma nota vazia!")
+    if (content === "") {
+      return toast.error("Não é possível criar uma nota vazia!");
     }
     onNoteCreated(content);
-
+    
     setContent("");
-
+    
     setShoulShowDescription(true);
-
+    
     toast.success("Nota criada com sucesso!");
+    setIsOpen(false);
   }
 
   function handleStartRecording() {
-    
-    
-    const isSpeechRecognitionAPIIsAvailable = 'SpeechRecognition' in window || 'webkitSpeechRecognition' in window
-    
-    if(!isSpeechRecognitionAPIIsAvailable) {
-      alert("Infelizmente o seu navegador não suporta a API de gravação de voz")
-      return
+    const isSpeechRecognitionAPIIsAvailable =
+      "SpeechRecognition" in window || "webkitSpeechRecognition" in window;
+
+    if (!isSpeechRecognitionAPIIsAvailable) {
+      alert(
+        "Infelizmente o seu navegador não suporta a API de gravação de voz"
+      );
+      return;
     }
-  
+
     setIsRecording(true);
     setShoulShowDescription(false);
-  
-    const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition
-  
-    speechRecognition = new SpeechRecognitionAPI()
 
-    speechRecognition.lang = 'pt-BR'
-    speechRecognition.continuous = true
-    speechRecognition.maxAlternatives = 1
-    speechRecognition.interimResults = true
+    const SpeechRecognitionAPI =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    speechRecognition = new SpeechRecognitionAPI();
+
+    speechRecognition.lang = "pt-BR";
+    speechRecognition.continuous = true;
+    speechRecognition.maxAlternatives = 1;
+    speechRecognition.interimResults = true;
 
     speechRecognition.onresult = (event) => {
       // console.log(event.results);
-      const transcription = Array.from(event.results).reduce( (text, result) => {
-        return text.concat(result[0].transcript)
-      }, '')
+      const transcription = Array.from(event.results).reduce((text, result) => {
+        return text.concat(result[0].transcript);
+      }, "");
 
-      setContent(transcription)
-    }
+      setContent(transcription);
+    };
 
     speechRecognition.onerror = (event) => {
       console.error(event);
-      
-    }
+    };
 
-    speechRecognition.start()
+    speechRecognition.start();
   }
   function handleStopRecording() {
     setIsRecording(false);
-    if(speechRecognition !== null){
+    if (speechRecognition !== null) {
       speechRecognition.stop();
     }
   }
 
   return (
-    <Dialog.Root>
-      <Dialog.Trigger className="rounded-md flex flex-col bg-slate-700 p-5 gap-3 outline-none overflow-hidden relative hover:ring-2 hover:ring-slate-600 focus-visible:ring-2 focus-visible:ring-lime-400">
+    <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog.Trigger className="rounded-md flex flex-col bg-slate-700 p-5 gap-3 outline-none overflow-hidden relative hover:ring-2 hover:ring-slate-600 focus-visible:ring-2 focus-visible:ring-lime-400"
+      onClick={() => setIsOpen(true)}>
         <span className="text-sm font-medium text-slate-200">
           Adicionar nota
         </span>
@@ -112,15 +117,16 @@ export function AddCard({ onNoteCreated }: AddCardProps) {
               {shouldShowDescription ? (
                 <p className="text-sm leading-6 text-slate-400">
                   Comece{" "}
-                  <button 
-                  className="font-medium text-lime-400 hover:underline"
-                  type="button"
-                  onClick={handleStartRecording}>
+                  <button
+                    className="font-medium text-lime-400 hover:underline"
+                    type="button"
+                    onClick={handleStartRecording}
+                  >
                     gravando uma nota
                   </button>{" "}
                   em áudio ou se preferir{" "}
                   <button
-                    className="font-medium text-lime-400 hover:underline" 
+                    className="font-medium text-lime-400 hover:underline"
                     type="button"
                     onClick={handleStartEditor}
                   >
@@ -146,13 +152,13 @@ export function AddCard({ onNoteCreated }: AddCardProps) {
                 Gravando! (clique para interromper)
               </button>
             ) : (
-              <button
-                type="button"
-                onClick={handleSaveNote}
-                className="w-full bg-lime-400 py-4 text-center text-sm text-lime-950 outline:none font-medium hover:bg-lime-500"
-              >
-                Salvar nota
-              </button>
+                <button
+                  type="button"
+                  onClick={handleSaveNote}
+                  className="w-full bg-lime-400 py-4 text-center text-sm text-lime-950 outline:none font-medium hover:bg-lime-500"
+                >
+                  Salvar nota
+                </button>
             )}
           </form>
         </Dialog.Content>
