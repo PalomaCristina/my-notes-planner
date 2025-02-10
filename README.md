@@ -1,50 +1,48 @@
-# React + TypeScript + Vite
+# Aplicação de Anotações com React, TypeScript e Tailwind CSS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📜 Descrição
+**Esta aplicação foi desenvolvida para o Hackaton da Pós graduação em Desenvolvimento Fullstack na FIAP**  
 
-Currently, two official plugins are available:
+Uma solução web responsiva desenvolvida com React, TypeScript e Vite, projetada para facilitar a organização e o acesso às suas anotações de maneira prática e eficiente. Entre suas principais funcionalidades, destacam-se:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Criação de Anotações**: Os usuários podem criar anotações digitadas ou por gravação de áudio.
+- **Busca Circular**: Ferramenta de busca poderosa que permite encontrar rapidamente informações relevantes.
+- **Acessibilidade e Mobilidade**: A aplicação é responsiva, funcionando perfeitamente em qualquer dispositivo.
+- **Uso Offline**: As anotações são armazenadas no Local Storage do navegador, possibilitando o uso mesmo sem conexão à internet.
 
-## Expanding the ESLint configuration
+## 🚀 Tecnologias Utilizadas
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática ao código.
+- **Vite**: Ferramenta de build extremamente rápida e leve para projetos modernos.
+- **Local Storage**: Solução de armazenamento no navegador para acesso offline.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 📦 Instalação e Uso
+Siga os passos abaixo para rodar o projeto localmente:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clone o repositório:
+```bash
+git clone https://github.com/seu-usuario/seu-repositorio.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+2.Instale as dependências:
+```bash
+npm install
 ```
+
+3. Inicie o servidor de desenvolvimento:
+```bash
+npm run dev
+```
+
+Acesse a aplicação em: [text](http://localhost:5173)
+
+## Funcionalidades
+
+**Adicionar Anotações:** Crie notas digitadas ou grave sua voz diretamente no navegador.
+**Busca Avançada:** Pesquise entre suas notas com a busca circular e encontre rapidamente o que precisa.
+**Uso Responsivo:** A interface adapta-se a qualquer tela, seja desktop, tablet ou smartphone.
+**Armazenamento Offline:** Acesse suas notas mesmo sem conexão, graças ao uso do Local Storage.
+
+## 🌐 Demonstração
+
+Acesse: [text](https://my-notes-planner.vercel.app/)
