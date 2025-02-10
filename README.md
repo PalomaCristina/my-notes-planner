@@ -24,7 +24,7 @@ Siga os passos abaixo para rodar o projeto localmente:
 git clone https://github.com/seu-usuario/seu-repositorio.git
 ```
 
-2.Instale as dependências:
+2. Instale as dependências:
 ```bash
 npm install
 ```
@@ -45,4 +45,4 @@ Acesse a aplicação em: [text](http://localhost:5173)
 
 ## 🌐 Demonstração
 
-Acesse: [text](https://my-notes-planner.vercel.app/)
+Acesse o site hospedado: [My notes planner](https://my-notes-planner.vercel.app/)
